@@ -25,17 +25,10 @@ public class Socio {
         return cedula;
     }
 
-    /**
-     * Devuelve una vista inmodificable de las cuentas para proteger el estado interno.
-     */
     public List<Cuenta> getCuentas() {
         return Collections.unmodifiableList(cuentas);
     }
 
-    /**
-     * Añade una cuenta al socio (uso controlado). No valida duplicados globales —
-     * eso lo debe hacer la cooperativa al abrir cuentas para garantizar unicidad.
-     */
     public void addCuenta(Cuenta cuenta) {
         cuentas.add(cuenta);
     }

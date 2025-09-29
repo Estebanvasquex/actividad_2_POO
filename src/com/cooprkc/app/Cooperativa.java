@@ -29,19 +29,12 @@ public class Cooperativa {
         return new ArrayList<>(socios);
     }
 
-    /**
-     * Verifica si el número de cuenta ya existe en la cooperativa.
-     */
     public boolean numeroCuentaExiste(String numeroCuenta) {
         return socios.stream()
                 .flatMap(s -> s.getCuentas().stream())
                 .anyMatch(c -> c.getNumeroCuenta().equals(numeroCuenta));
     }
 
-    /**
-     * Abre una cuenta para un socio, validando que el número de cuenta sea único.
-     * Retorna true si la apertura fue exitosa, false si el número ya existe.
-     */
     public boolean abrirCuenta(Socio socio, Cuenta cuenta) {
         if (numeroCuentaExiste(cuenta.getNumeroCuenta())) {
             return false;
@@ -50,12 +43,6 @@ public class Cooperativa {
         return true;
     }
 
-    /**
-     * Ejecuta una transacción, la registra y maneja errores específicos con try-catch.
-     *
-     * Nota: se registran tanto transacciones exitosas como intentos fallidos para
-     * fines de auditoría.
-     */
     public void ejecutarTransaccion(Transaccion t) {
         String tipo = t.getTipo();
         String numeroCuenta = "N/A";
@@ -63,7 +50,6 @@ public class Cooperativa {
         boolean exitoso = false;
         String mensaje = "";
 
-        // intentamos extraer número de cuenta si la transacción provee método concreto
         try {
             if (t instanceof Deposito) numeroCuenta = ((Deposito) t).getNumeroCuentaDestino();
             else if (t instanceof Retiro) numeroCuenta = ((Retiro) t).getNumeroCuentaOrigen();
@@ -97,18 +83,12 @@ public class Cooperativa {
 
     // ----- Consultas funcionales solicitadas en el enunciado -----
 
-    /**
-     * Lista los nombres de todos los socios usando streams (map + forEach).
-     */
     public void imprimirNombresSocios() {
         listarSocios().stream()
                 .map(Socio::getNombre)
                 .forEach(System.out::println);
     }
 
-    /**
-     * Filtra y devuelve cuentas con saldo mayor a un umbral.
-     */
     public List<Cuenta> cuentasConSaldoMayorQue(double umbral) {
         return listarSocios().stream()
                 .flatMap(socio -> socio.getCuentas().stream())
@@ -116,9 +96,6 @@ public class Cooperativa {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Calcula el total de saldos en la cooperativa usando reduce().
-     */
     public double totalSaldos() {
         return listarSocios().stream()
                 .flatMap(s -> s.getCuentas().stream())

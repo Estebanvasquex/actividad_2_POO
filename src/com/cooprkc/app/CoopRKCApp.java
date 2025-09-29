@@ -20,8 +20,9 @@ public class CoopRKCApp {
         cooperativa.registrarSocio(socio2);
 
         // Abrir cuentas de ahorro (la cooperativa valida duplicados)
-        CuentaAhorros cuenta1 = new CuentaAhorros("001", 100000, 5);
-        CuentaAhorros cuenta2 = new CuentaAhorros("002", 200000, 3);
+        CuentaAhorros cuenta1 = new CuentaAhorros("001", 100000, 0.05);
+        CuentaAhorros cuenta2 = new CuentaAhorros("002", 200000, 0.03);
+        CuentaAhorros cuenta3 = new CuentaAhorros("003", 300000, 0.03);
         boolean ok1 = cooperativa.abrirCuenta(socio1, cuenta1);
         boolean ok2 = cooperativa.abrirCuenta(socio2, cuenta2);
         if (!ok1 || !ok2) System.out.println("Error: no se pudieron abrir todas las cuentas por duplicado.");
@@ -32,10 +33,10 @@ public class CoopRKCApp {
         cooperativa.abrirCuenta(socio3, new CuentaAhorros("003", 600000, 2.5));
 
         // Realizar transacciones (siempre pasar por cooperativa para registro y manejo de errores)
-        Transaccion deposito = new Deposito(cuenta1, 50000);
+        Transaccion deposito = new Deposito(cuenta1, -699999);
         cooperativa.ejecutarTransaccion(deposito);
 
-        Transaccion retiro = new Retiro(cuenta1, 120000);
+        Transaccion retiro = new Retiro(cuenta3, 1200000);
         cooperativa.ejecutarTransaccion(retiro); // si hay error, será capturado e informado
 
         // Intento de retiro que fallará para demostrar manejo de errores

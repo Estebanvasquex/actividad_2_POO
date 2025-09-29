@@ -17,17 +17,11 @@ public class Cuenta {
         return saldo;
     }
 
-    /**
-     * Deposita una cantidad positiva. No acepta montos negativos (validación mínima).
-     */
     public void depositar(double monto) {
         if (monto <= 0) throw new IllegalArgumentException("El monto a depositar debe ser positivo.");
         this.saldo += monto;
     }
 
-    /**
-     * Intenta retirar. Retorna true si se realizó correctamente; false si no hay saldo.
-     */
     public boolean retirar(double monto) {
         if (monto <= 0) throw new IllegalArgumentException("El monto a retirar debe ser positivo.");
         if (saldo >= monto) {
